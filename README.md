@@ -1,31 +1,19 @@
-# Normalization Statistics
+# Random Seeds
 
-## Source
-All experiments use the **FI-2010 `NoAuction_Zscore`** subset, i.e. the officially
-Z-score–normalized version of the FI-2010 benchmark
-(Ntakaris et al., *Journal of Forecasting*, 2018, ref. [21] in the manuscript).
+All stochastic steps are seeded for full reproducibility.
 
-## Method (causal, no look-ahead)
-Each feature `j` is standardized as
+| Seed | Used for | Where set |
+|------|----------|-----------|
+| **3407** | FP32 training, QAT fine-tuning, all main results | `set_seed(3407)` for Python / NumPy / PyTorch / CUDA at the top of the training and QAT scripts (`../1_qat_config/qat_perchannel_input.py`, and the FP32 trainer) |
+| **2026** | Deterministic sampling of the 2,000 on-board test subset | board-test script (`../7_board_test/board_test_144.py`); the exact drawn indices are frozen in `../7_board_test/board_manifest.csv` |
+| **{3407, 42, 123, 2024, 7}** | Five-seed residual/Focal-Loss ablation (Table on validation only) | multi-seed ablation script (`ablation_multiseed.py`) |
 
-    x_tilde[t,j] = (x[t,j] - mu_j) / sigma_j,   j = 1..144
-
-where `mu_j` and `sigma_j` are the per-feature mean and standard deviation
-**computed from prior trading days only** (the FI-2010 convention), so the
-normalization is strictly causal and introduces no look-ahead bias. This matches
-Eq. (7) and Section III-C of the manuscript.
-
-## Why no separate statistics file is shipped
-The FI-2010 `NoAuction_Zscore` files distributed by the benchmark authors are
-**already normalized**; the mean/variance were applied by the dataset provider
-using the anchored day convention above. This pipeline therefore consumes the
-normalized files directly and does not recompute or store its own `mu/sigma`.
-
-The exact files, day ranges, per-split sample counts and class distributions
-consumed for every fold are documented in
-`../4_dataset_manifest_and_leakage/dataset_manifest_CF*.{csv,json}`.
-
-## To reproduce on a new instrument/venue
-Recompute `mu_j, sigma_j` from a causal (prior-day) window on the target feed
-and apply the same Eq. (7); no other change to the datapath is required
-(see manuscript Section VII-C, third limitation).
+## Notes
+- The main deployed model (FP32 champion → QAT INT8) uses seed **3407** end-to-end,
+  matching Table III of the manuscript ("random seed 3407 for Python, NumPy, PyTorch and CUDA").
+- Seed **3407** is fixed for `random`, `numpy`, `torch` (CPU) and `torch.cuda`
+  (all GPU streams), plus `cudnn.deterministic = True`, so a re-run reproduces the
+  reported weights bit-for-bit on the same PyTorch/CUDA build (PyTorch 2.11.0, CUDA 12.8).
+- The board-sampling seed (2026) only selects *which* 2,000 test samples are streamed
+  to the FPGA; it does not affect training. The selected identifiers are frozen in
+  `board_manifest.csv` so the on-board experiment is reproducible regardless of seed.
