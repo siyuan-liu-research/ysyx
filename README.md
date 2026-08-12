@@ -10,16 +10,16 @@ parameters).
 
 ## Provided now (for the reviewers)
 
-| Folder | Contents | Supports |
-|--------|----------|----------|
-| `1_qat_config/` | `hyperparams_table3.md` — full QAT/training hyperparameter table (optimizer, lr, epochs, seed, dropout, etc.) | R1-6 (QAT configuration) |
-| `2_model_weights/` | Trained parameters: `variant_k3_f144_tail_CF9.pth` (FP32), `best_qat_pcin_CF9_f144.pth` (QAT), `int8_params_CF9_f144_pcin.npz` (fixed-point), `results_int8_pcin_CF9_f144.json` | R1-6 (model weights) |
-| `3_hls_code/` | Per variant: `weights.h` (exported INT8 weight arrays), `lob_tb.cpp` (HLS **test bench** with golden I/O), `hls_config.cfg`, `vitis-comp.json` — **kernel implementation excluded** | R1-4 / R1-5 (test harness + weights) |
-| `4_dataset_manifest_and_leakage/` | `dataset_manifest_CF1..9.{csv,json}`, `leakage_check_CF1..9.log`, `test_set_access_audit_step{2,3}.log` — **output evidence** of the leak-free protocol (the generating scripts are withheld) | R1-1 / R1-2 |
-| `5_normalization/` | `NORMALIZATION.md` (causal Z-score, Eq. 7) | R1-6 |
-| `6_seeds/` | `SEEDS.md` (3407 / 2026 / 5-seed set) | R1-6 |
-| `7_board_test/` | `board_manifest.csv` (2,000 on-board sample IDs), `board_golden.npz` (golden outputs), `board_paired_results.csv` (FP32/INT8/board pairs), `board_test_144.py` (host **test** driver), `board_test_provenance.log` | R2-2 / R1-6 (board-test IDs) |
-| `8_postroute_reports/` | Vivado routed `timing_summary` / `utilization_placed` / `power_routed` reports for the 5 feasible Table-8 variants on xcku040-ffva1156-2-e | R1-4 / R1-5 (WNS/TNS, utilization, power) |
+| Folder | Contents |
+|--------|----------|
+| `1_qat_config/` | `hyperparams_table3.md` — full QAT/training hyperparameter table (optimizer, lr, epochs, seed, dropout, etc.) | 
+| `2_model_weights/` | Trained parameters: `variant_k3_f144_tail_CF9.pth` (FP32), `best_qat_pcin_CF9_f144.pth` (QAT), `int8_params_CF9_f144_pcin.npz` (fixed-point), `results_int8_pcin_CF9_f144.json` |
+| `3_hls_code/` | Per variant: `weights.h` (exported INT8 weight arrays), `lob_tb.cpp` (HLS **test bench** with golden I/O), `hls_config.cfg`, `vitis-comp.json` — **kernel implementation excluded** | 
+| `4_dataset_manifest_and_leakage/` | `dataset_manifest_CF1..9.{csv,json}`, `leakage_check_CF1..9.log`, `test_set_access_audit_step{2,3}.log` — **output evidence** of the leak-free protocol (the generating scripts are withheld) | 
+| `5_normalization/` | `NORMALIZATION.md` (causal Z-score, Eq. 7) | 
+| `6_seeds/` | `SEEDS.md` (3407 / 2026 / 5-seed set) | 
+| `7_board_test/` | `board_manifest.csv` (2,000 on-board sample IDs), `board_golden.npz` (golden outputs), `board_paired_results.csv` (FP32/INT8/board pairs), `board_test_144.py` (host **test** driver), `board_test_provenance.log` | 
+| `8_postroute_reports/` | Vivado routed `timing_summary` / `utilization_placed` / `power_routed` reports for the 5 feasible Table-8 variants on xcku040-ffva1156-2-e | 
 
 These artifacts let the reviewers independently verify the leakage-free data
 protocol, the post-route timing/resource/power figures of Table 8, the bit-exact
