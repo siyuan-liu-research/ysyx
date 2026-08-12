@@ -8,7 +8,7 @@ This package provides evidence supporting the manuscript's claims
 parameters). 
 ---
 
-## Provided now (for the reviewers)
+## Provided (for the reviewers)
 
 | Folder | Contents |
 |--------|----------|
