@@ -19,7 +19,7 @@ parameters).
 | `5_normalization/` | `NORMALIZATION.md` (causal Z-score, Eq. 7) | 
 | `6_seeds/` | `SEEDS.md` (3407 / 2026 / 5-seed set) | 
 | `7_board_test/` | `board_manifest.csv` (2,000 on-board sample IDs), `board_golden.npz` (golden outputs), `board_paired_results.csv` (FP32/INT8/board pairs), `board_test_144.py` (host **test** driver), `board_test_provenance.log` | 
-| `8_postroute_reports/` | Vivado routed `timing_summary` / `utilization_placed` / `power_routed` reports for the 5 feasible Table-8 variants on xcku040-ffva1156-2-e | 
+| `8_postroute_reports/` | Vivado routed `timing_summary` / `utilization_placed` / `power_routed` reports for the 5 feasible Table-7 variants on xcku040-ffva1156-2-e | 
 
 
 ---
