@@ -3,7 +3,7 @@
 **"Microsecond-Latency, Fully On-Chip Limit Order Book Prediction on an Edge FPGA:
 A Lightweight INT8 1D-CNN Hardware–Software Co-Design"**
 
-This review-stage package provides evidence supporting the manuscript's claims
+This package provides evidence supporting the manuscript's claims
 (data protocol, hardware synthesis/place-and-route, on-board verification, quantized
 parameters). 
 ---
@@ -24,22 +24,6 @@ parameters).
 These artifacts let the reviewers independently verify the leakage-free data
 protocol, the post-route timing/resource/power figures of Table 8, the bit-exact
 on-board results, and the quantized model parameters.
-
----
-
-## Released upon acceptance
-
-The following **model-training and model-implementation source code** will be made
-publicly available in a repository upon acceptance:
-
-- QAT / training / quantization pipeline: `qat_perchannel_input.py`, `lob_model.py`,
-  `int8_forward.py`, `export_int8_params.py`, `lob_dataset.py`, `purge_embargo.py`,
-  `fi2010_config.py`
-- HLS kernel implementation: `lob_kernel.cpp` / `lob_kernel.h` (all variants)
-- Manifest / audit generation scripts: `make_manifest.py`, `_audit_manifests.py`
-
-The withheld code is not required to verify the reported results from the evidence
-above; it is provided at publication for full reproducibility.
 
 ---
 
